@@ -190,7 +190,7 @@ void operaciones() {
 			break;
 		}
 		case 3: {
-			cout << "Regresando";
+			cout << "Regresando..." << endl;
 			break;
 		}
 		default:
