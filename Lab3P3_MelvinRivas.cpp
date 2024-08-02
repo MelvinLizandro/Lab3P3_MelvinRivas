@@ -47,6 +47,7 @@ void triangulo_pascal(int rango) {
 		for (int j = 0; j < i; j++) {
 			cout << codigo(i, j) << " " ;
 		}
+		// imprime en duro el uno porque no puede hacerlo de otra forma
 			cout << "1" << endl;
 	}
 }
