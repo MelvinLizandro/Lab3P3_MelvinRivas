@@ -5,15 +5,50 @@ using namespace std;
 #include <time.h>  
 #include <math.h>   
 
-
-int triangulo_pascal(int filas, int columnas) {
-	
-	if (columnas == 0 || columnas == filas)
-	{
+int factorial(int numero)
+{
+	// funcion encargada de ir sacando el factorial acumulandose
+	//  para sacar el resultado final hasta que el valor llegue a ser menor que 2
+	if (numero < 2) {
 		return 1;
 	}
-	return triangulo_pascal(filas - 1, columnas - 1) + triangulo_pascal(filas - 1, columnas);
-	cout << "filas:" << filas << "columnas : " << columnas;
+	else {
+		// formula de factorial
+		return numero * factorial(numero - 1);
+	}
+}
+
+int codigo(int n, int r)
+{
+	if (r == 1) {
+		return n;
+	}
+	else if (n == r) {
+			return 1;
+		}
+		else
+		{
+		/*
+		formula:	 n!
+				--------------
+				(n! * (n! -r))
+		*/
+			return factorial(n) / (factorial(r) * factorial(n - r));
+	}
+}
+
+void triangulo_pascal(int rango) {
+	// le quitamos uno para que lo imprima bien
+	rango--;
+	// for para salto de linea 
+	for (int i = 0; i <= rango; i++)
+	{
+		// for de impresion de numeros mas el espacio de separaciob
+		for (int j = 0; j < i; j++) {
+			cout << codigo(i, j) << " " ;
+		}
+			cout << "1" << endl;
+	}
 }
 
 void ecuaciones_puntos() {
@@ -26,6 +61,7 @@ void ecuaciones_puntos() {
 		{
 			cout << "Cuidado no puede ser menor que 2" << endl;
 		}
+		//llena los arreglos con numeros ramdoms
 	} while (tamano < 2);
 	int* arreglo1 = new int[tamano];
 	for (size_t i = 0; i < tamano; i++)
@@ -38,6 +74,7 @@ void ecuaciones_puntos() {
 		arreglo2[i] = rand() % 20 + 1;
 	}
 	cout << "Puntos en X generados : [ ";
+	//los imprime
 	for (size_t i = 0; i < tamano; i++)
 	{
 		cout << arreglo1[i] << " ";
@@ -49,7 +86,7 @@ void ecuaciones_puntos() {
 		cout << arreglo2[i] << " ";
 	}
 	cout << "]" << endl;
-
+	//consigue la posicion que solicita el usuario
 	int punto1 = 1, punto2 = 2;
 	do {
 		cout << "Ingrese la posicion del punto 1: ";
@@ -59,11 +96,13 @@ void ecuaciones_puntos() {
 		cout << "Ingrese la posicion del punto 2: ";
 		cin >> punto2;
 	} while (punto2 < 0 || punto2 > tamano);
+	//les resta una ya que el arreglo empieza desde 0
 	punto1 = punto1 - 1;
 	punto2 = punto2 - 1;
 	cout << "Punto 1: " <<"(" << arreglo1[punto1] << " , " << arreglo2[punto1] << ")" << endl;
 	cout << "Punto 2: " << "(" << arreglo1[punto2] << " , " << arreglo2[punto2] << ")" << endl;
 	double resultado;
+	//formula para para calcular resultado
 	resultado = (arreglo2[punto2] - arreglo2[punto1]) / (arreglo1[punto2] - arreglo1[punto1]);
 	cout << "La ecuacion de la recta que pasa por los 2 puntos es m = " << resultado << endl;
 	delete[] arreglo1;
@@ -71,6 +110,7 @@ void ecuaciones_puntos() {
 }
 
 void suma_vectores() {
+	//inicia ramdom
 	srand(time(NULL));
 	int tamano = 2;
 	do {
@@ -80,6 +120,7 @@ void suma_vectores() {
 		{
 			cout << "Cuidado no puede ser menor que 2" << endl;
 		}
+		//inicia vector
 	} while (tamano < 2);
 	int* vector1 = new int[tamano];
 	for (size_t i = 0; i < tamano; i++)
@@ -92,6 +133,7 @@ void suma_vectores() {
 		vector2[i] = rand() % 20 + 1;
 	}
 	cout << "Valores generados en vector 1 : [ ";
+	// imprime vector
 	for (size_t i = 0; i < tamano; i++)
 	{
 		cout << vector1[i] << " ";
@@ -103,6 +145,7 @@ void suma_vectores() {
 		cout << vector2[i] << " ";
 	}
 	cout << "]" << endl;
+	// vector donde se sumara los resultados
 	double* vector3 = new double[tamano];
 	for (size_t i = 0; i < tamano; i++)
 	{
@@ -158,21 +201,22 @@ void operaciones() {
 
 void menu() {
 
-	int opciones = 0;
-	while (opciones != 3)
+	int *opciones = new int;
+	*opciones = 1;
+	while (*opciones != 3)
 	{
 		cout << "---- MENU ----" << endl << "1. Triangulo de Pascal " << endl <<
 			"2. Operaciones de numero" << endl << "3. Salir" << endl <<
 			"Cual desea elegir: ";
-		cin >> opciones;
+		cin >> *opciones;
 		cout << endl;
-		switch (opciones)
+		switch (*opciones)
 		{
 		case 1: {
 			int filas;
-			cout << "Ingrese el numero de filas para el triangulo  de pascal: ";
+			cout << "Ingrese el numero de filas para el triangulo de pascal: ";
 			cin >> filas;
-			triangulo_pascal(filas,3);
+			triangulo_pascal(filas);
 			break;
 		}
 		case 2: {
@@ -188,6 +232,7 @@ void menu() {
 			break;
 		}
 	}
+	delete opciones;
 }
 
 int main()
