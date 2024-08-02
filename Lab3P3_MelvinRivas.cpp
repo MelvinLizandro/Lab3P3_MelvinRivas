@@ -2,16 +2,18 @@
 using namespace std;
 #include <stdio.h>     
 #include <stdlib.h>    
-#include <time.h>     
+#include <time.h>  
+#include <math.h>   
 
 
-void triangulo_pascal(int filas, int inicios) {
+int triangulo_pascal(int filas, int columnas) {
 	
-	int primero = 1, seguimiento;
-	while (filas >= inicios)
+	if (columnas == 0 || columnas == filas)
 	{
-		cout << primero << endl;
+		return 1;
 	}
+	return triangulo_pascal(filas - 1, columnas - 1) + triangulo_pascal(filas - 1, columnas);
+	cout << "filas:" << filas << "columnas : " << columnas;
 }
 
 void ecuaciones_puntos() {
@@ -52,11 +54,11 @@ void ecuaciones_puntos() {
 	do {
 		cout << "Ingrese la posicion del punto 1: ";
 		cin >> punto1;
-	} while (punto1 < 0 && punto1 > tamano);
+	} while (punto1 < 0 || punto1 > tamano);
 	do {
 		cout << "Ingrese la posicion del punto 2: ";
 		cin >> punto2;
-	} while (punto2 < 0 && punto2 > tamano);
+	} while (punto2 < 0 || punto2 > tamano);
 	punto1 = punto1 - 1;
 	punto2 = punto2 - 1;
 	cout << "Punto 1: " <<"(" << arreglo1[punto1] << " , " << arreglo2[punto1] << ")" << endl;
@@ -101,7 +103,7 @@ void suma_vectores() {
 		cout << vector2[i] << " ";
 	}
 	cout << "]" << endl;
-	int* vector3 = new int[tamano];
+	double* vector3 = new double[tamano];
 	for (size_t i = 0; i < tamano; i++)
 	{
 		vector3[i] = vector1[i] + vector2[i];
@@ -112,6 +114,17 @@ void suma_vectores() {
 		cout << vector3[i] << " ";
 	}
 	cout << "]" << endl;
+	double elevado, resultado = 0;
+	for (size_t i = 0; i < tamano; i++)
+	{
+		elevado = pow(vector3[i], 2);
+		resultado = resultado + elevado;
+	}
+	resultado = sqrt(resultado);
+	cout << "La norma de la suma de los vectores 1 y 2 es: " << resultado << endl;
+	delete[] vector1;
+	delete[] vector2;
+	delete[] vector3;
 }
 
 void operaciones() {
@@ -148,7 +161,7 @@ void menu() {
 	int opciones = 0;
 	while (opciones != 3)
 	{
-		cout << "Menu" << endl << "1. Triangulo de Pascal " << endl <<
+		cout << "---- MENU ----" << endl << "1. Triangulo de Pascal " << endl <<
 			"2. Operaciones de numero" << endl << "3. Salir" << endl <<
 			"Cual desea elegir: ";
 		cin >> opciones;
@@ -159,7 +172,7 @@ void menu() {
 			int filas;
 			cout << "Ingrese el numero de filas para el triangulo  de pascal: ";
 			cin >> filas;
-			triangulo_pascal(filas,1);
+			triangulo_pascal(filas,3);
 			break;
 		}
 		case 2: {
